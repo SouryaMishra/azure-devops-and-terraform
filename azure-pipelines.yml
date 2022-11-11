@@ -30,3 +30,26 @@ stages:
               tags: |
                 $(tag)
                 latest
+  - stage: Provision
+    displayName: Provision resources on Azure with Terraform
+    dependsOn: Build
+    jobs:
+      - job: Provision
+        displayName: "Provisioning Container Instance"
+        pool:
+          vmImage: "ubuntu-latest"
+        variables:
+          - group: Terraform-Env-Vars
+        steps:
+          - script: |
+              set -e
+
+              terraform init -input=false
+              terraform apply -input=false -auto-approve
+            name: "RunTerraform"
+            displayName: "Run Terraform"
+            env:
+              ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+              ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
+              ARM_TENANT_ID: $(ARM_TENANT_ID)
+              ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
