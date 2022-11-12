@@ -29,7 +29,6 @@ stages:
               Dockerfile: "**/Dockerfile"
               tags: |
                 $(tag)
-                latest
   - stage: Provision
     displayName: Provision resources on Azure with Terraform
     dependsOn: Build
