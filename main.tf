@@ -36,7 +36,7 @@ resource "azurerm_container_group" "cg" {
 
   container {
     name   = "weatherapi"
-    image  = "souryamishra/weatherapi:${var.imageBuild}"
+    image  = "${var.imageName}:${var.imageBuild}"
     cpu    = "1"
     memory = "1"
     ports {
